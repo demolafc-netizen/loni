@@ -1,0 +1,2223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>For LJ 💛</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💛</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pink:#f4a261;
+    --pink-deep:#e07a5f;
+    --purple:#c65d3b;
+    --gold:#f2b880;
+    --cream:#fdf6ee;
+    --ink:#4a3527;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:'Poppins',sans-serif;
+    color:var(--ink);
+    background:linear-gradient(180deg,#fdf6ee,#f7e7d5 20%,#f3dcc4 45%,#f0cba3 70%,#fdf6ee);
+    overflow-x:hidden;
+  }
+  h1,h2{font-weight:800;}
+  .script{font-family:'Caveat',cursive;}
+
+  /* ---------- floating background layer ---------- */
+  #bg-layer{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:1;
+    overflow:hidden;
+  }
+  #fireworks-dim{
+    position:fixed;
+    inset:0;
+    background:#170d12;
+    opacity:0;
+    pointer-events:none;
+    z-index:58;
+    transition:opacity 1.1s ease;
+  }
+  #fireworks-dim.show{ opacity:.78; }
+  #fireworks-canvas{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:59;
+    width:100%;
+    height:100%;
+  }
+  .balloon{
+    position:absolute;
+    bottom:-160px;
+    width:60px;
+    height:74px;
+    border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;
+    opacity:.85;
+    animation:rise linear infinite;
+  }
+  .balloon::after{
+    content:"";
+    position:absolute;
+    left:50%;
+    top:100%;
+    width:1px;
+    height:60px;
+    background:rgba(58,33,64,.35);
+    transform:translateX(-50%);
+  }
+  .balloon::before{
+    content:"";
+    position:absolute;
+    left:50%;
+    top:98%;
+    width:6px;
+    height:6px;
+    background:inherit;
+    filter:brightness(.85);
+    clip-path:polygon(50% 0,0 100%,100% 100%);
+    transform:translateX(-50%);
+  }
+  @keyframes rise{
+    0%{ transform:translateX(0) translateY(0) rotate(-4deg); }
+    50%{ transform:translateX(30px) translateY(-55vh) rotate(4deg); }
+    100%{ transform:translateX(-10px) translateY(-115vh) rotate(-3deg); }
+  }
+  .float-photo{
+    position:absolute;
+    width:min(26vw,120px);
+    aspect-ratio:4/5;
+    background:#fff;
+    padding:8px 8px 20px;
+    border-radius:6px;
+    box-shadow:0 12px 24px rgba(120,40,80,.18);
+    animation:drift ease-in-out infinite;
+    opacity:.9;
+  }
+  .float-photo img,.float-photo .ph-fallback{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    border-radius:2px;
+    display:block;
+  }
+  .float-photo .ph-fallback{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:28px;
+    background:linear-gradient(135deg,var(--pink),var(--purple));
+  }
+  .float-photo .fname{
+    position:absolute;
+    bottom:2px;
+    left:0;
+    right:0;
+    text-align:center;
+    font-family:'Caveat',cursive;
+    font-weight:700;
+    font-size:clamp(.75rem,2.6vw,.95rem);
+    color:var(--pink-deep);
+  }
+  @keyframes drift{
+    0%,100%{ transform:translateY(0) rotate(var(--r,-6deg)); }
+    50%{ transform:translateY(-26px) rotate(calc(var(--r,-6deg) * -1)); }
+  }
+
+  section{
+    position:relative;
+    z-index:2;
+    min-height:100vh;
+    padding:64px 20px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+  }
+
+  /* ---------- hero ---------- */
+  #hero{
+    min-height:100vh;
+    gap:18px;
+  }
+  .eyebrow{
+    letter-spacing:.3em;
+    text-transform:uppercase;
+    font-size:.7rem;
+    font-weight:600;
+    color:var(--pink-deep);
+  }
+  #hero-title{
+    font-size:clamp(2.4rem,10vw,4.5rem);
+    background:linear-gradient(90deg,var(--pink-deep),var(--purple));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+  #hero p.sub{
+    max-width:420px;
+    font-size:1.05rem;
+    opacity:.85;
+  }
+  #begin-btn{
+    margin-top:10px;
+    border:none;
+    padding:16px 34px;
+    font-size:1.05rem;
+    font-weight:700;
+    border-radius:999px;
+    background:linear-gradient(90deg,var(--pink-deep),var(--purple));
+    color:#fff;
+    cursor:pointer;
+    box-shadow:0 10px 28px rgba(255,61,127,.4);
+    transition:transform .15s ease;
+  }
+  #begin-btn:active{ transform:scale(.96); }
+  .scroll-hint{
+    position:absolute;
+    bottom:26px;
+    font-size:1.6rem;
+    animation:bob 1.6s ease-in-out infinite;
+    opacity:.7;
+  }
+  @keyframes bob{ 0%,100%{transform:translateY(0);} 50%{transform:translateY(10px);} }
+
+  .hidden-until-start{
+    opacity:.25;
+    filter:blur(2px);
+    pointer-events:none;
+    transition:opacity .6s ease, filter .6s ease;
+  }
+  body.started .hidden-until-start{
+    opacity:1;
+    filter:none;
+    pointer-events:auto;
+  }
+
+  /* ---------- section heading ---------- */
+  .section-title{
+    font-size:clamp(1.8rem,6vw,2.6rem);
+    margin-bottom:6px;
+  }
+  .section-sub{
+    opacity:.75;
+    margin-bottom:36px;
+    max-width:420px;
+  }
+
+  /* ---------- guide ---------- */
+  #guide-list{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    max-width:440px;
+    width:100%;
+    text-align:left;
+  }
+  .guide-item{
+    display:flex;
+    align-items:flex-start;
+    gap:14px;
+    background:rgba(255,255,255,.75);
+    border-radius:14px;
+    padding:14px 16px;
+    box-shadow:0 8px 18px rgba(120,40,80,.1);
+  }
+  .guide-item .guide-icon{ font-size:1.3rem; line-height:1.3; }
+  .guide-item .guide-text{ font-size:.95rem; line-height:1.4; }
+
+  /* ---------- gallery ---------- */
+  #gallery-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:18px;
+    max-width:520px;
+    width:100%;
+  }
+  .gcard{ perspective:1200px; }
+  .gcard .flip{
+    position:relative;
+    width:100%;
+    aspect-ratio:1/1;
+    transform-style:preserve-3d;
+    transition:transform .7s cubic-bezier(.4,.2,.2,1);
+    transform:rotate(var(--r,0deg));
+  }
+  .gcard.flipped .flip{ transform:rotate(0deg) rotateY(180deg); }
+  .gcard:nth-child(2n){ --r:2.5deg; }
+  .gcard:nth-child(3n){ --r:-3deg; }
+  @media (hover:hover){
+    .gcard:hover .flip{ transform:rotateY(180deg); }
+  }
+  .gcard .face{
+    position:absolute;
+    inset:0;
+    backface-visibility:hidden;
+    border-radius:8px;
+    background:#fff;
+    padding:10px 10px 22px;
+    box-shadow:0 14px 30px rgba(120,40,80,.16);
+  }
+  .gcard .face.back{ transform:rotateY(180deg); }
+  .gcard .frame{
+    width:100%;
+    height:100%;
+    border-radius:4px;
+    overflow:hidden;
+    background:linear-gradient(135deg,var(--pink),var(--purple));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:2rem;
+  }
+  .gcard .frame img{ width:100%; height:100%; object-fit:cover; }
+  .gcard .cap{
+    font-family:'Caveat',cursive;
+    font-size:1.1rem;
+    margin-top:6px;
+    color:var(--ink);
+    position:absolute;
+    bottom:6px;
+    left:10px;
+    right:10px;
+  }
+  .gcard .face.back{
+    background:linear-gradient(135deg,var(--pink-deep),var(--purple));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+  }
+  .gcard .face.back p{
+    font-family:'Caveat',cursive;
+    font-size:1.35rem;
+    color:#fff;
+    line-height:1.3;
+    margin:0;
+  }
+  .gcard .flip-hint{
+    position:absolute;
+    top:6px;
+    right:6px;
+    font-size:.9rem;
+    opacity:.7;
+  }
+
+  /* ---------- video memories ---------- */
+  #video-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:18px;
+    max-width:520px;
+    width:100%;
+  }
+  .video-card{
+    background:#fff;
+    padding:10px 10px 22px;
+    border-radius:10px;
+    box-shadow:0 14px 30px rgba(120,40,80,.16);
+  }
+  .video-card .frame{
+    position:relative;
+    width:100%;
+    aspect-ratio:1/1;
+    border-radius:4px;
+    overflow:hidden;
+    background:linear-gradient(135deg,var(--pink),var(--purple));
+    cursor:pointer;
+  }
+  .video-card .frame img,.video-card .frame video{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  .video-card .play-btn{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:2rem;
+    background:rgba(74,53,39,.25);
+    color:#fff;
+    transition:opacity .3s ease;
+  }
+  .video-card .cap{
+    font-family:'Caveat',cursive;
+    font-size:1.1rem;
+    margin-top:6px;
+    color:var(--ink);
+    text-align:center;
+  }
+
+  /* ---------- discover intro ---------- */
+  #discover-progress{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:rgba(255,255,255,.7);
+    padding:8px 18px;
+    border-radius:999px;
+    font-size:.85rem;
+    font-weight:600;
+    color:var(--pink-deep);
+    margin-bottom:8px;
+  }
+
+  /* ---------- flower garden ---------- */
+  #flower-garden{
+    position:relative;
+    width:100%;
+    max-width:560px;
+    min-height:1150px;
+  }
+  .flower{
+    position:absolute;
+    width:56px;
+    height:56px;
+    border:none;
+    background:none;
+    font-size:2.4rem;
+    cursor:pointer;
+    line-height:1;
+    filter:drop-shadow(0 4px 8px rgba(120,40,80,.2));
+    transition:transform .35s cubic-bezier(.4,1.6,.6,1), filter .35s ease;
+    animation:sway ease-in-out infinite;
+    animation-duration:var(--sway,4s);
+  }
+  @keyframes sway{
+    0%,100%{ transform:rotate(-6deg); }
+    50%{ transform:rotate(6deg); }
+  }
+  .flower.bloomed{
+    transform:scale(1.35) rotate(0deg) !important;
+    animation:none;
+    filter:drop-shadow(0 6px 14px rgba(198,93,59,.4));
+  }
+  .flower:active{ transform:scale(1.5); }
+
+  /* ---------- corner hearts ---------- */
+  .corner-heart{
+    position:absolute;
+    width:40px;
+    height:40px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:1.5rem;
+    border:none;
+    background:rgba(255,255,255,.6);
+    border-radius:50%;
+    cursor:pointer;
+    opacity:0;
+    transform:scale(.4);
+    transition:opacity .6s ease, transform .6s ease;
+    pointer-events:none;
+  }
+  .corner-heart.visible{
+    opacity:1;
+    transform:scale(1);
+    pointer-events:auto;
+    animation:pulse-heart 1.8s ease-in-out infinite;
+  }
+  .corner-heart.found{ animation:none; opacity:.55; }
+  @keyframes pulse-heart{
+    0%,100%{ box-shadow:0 0 0 0 rgba(224,122,95,.5); }
+    50%{ box-shadow:0 0 0 10px rgba(224,122,95,0); }
+  }
+  .corner-heart.edge-left{ left:2px; }
+  .corner-heart.edge-right{ right:2px; }
+
+  /* ---------- shared discovery modal ---------- */
+  .modal-overlay{
+    position:fixed;
+    inset:0;
+    z-index:50;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    background:rgba(74,53,39,.55);
+    backdrop-filter:blur(3px);
+    padding:20px;
+  }
+  .modal-overlay.show{ display:flex; }
+  .modal-card{
+    background:#fff;
+    border-radius:22px;
+    padding:30px 26px 26px;
+    max-width:320px;
+    text-align:center;
+    box-shadow:0 24px 60px rgba(0,0,0,.35);
+    animation:pop .4s ease;
+  }
+  .modal-icon{
+    width:130px;
+    height:130px;
+    border-radius:50%;
+    margin:6px auto 14px;
+    border:5px solid var(--gold);
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:3rem;
+    background:linear-gradient(135deg,var(--pink),var(--purple));
+  }
+  .modal-icon img{ width:100%; height:100%; object-fit:cover; }
+  .modal-card h3{ margin:0 0 6px; font-size:1.4rem; font-family:'Caveat',cursive; font-size:1.7rem; }
+  .modal-card p{ margin:0 0 18px; opacity:.85; font-size:1rem; line-height:1.5; white-space:pre-line; }
+  .modal-close{
+    border:none;
+    background:var(--ink);
+    color:#fff;
+    padding:11px 26px;
+    border-radius:999px;
+    font-weight:600;
+    cursor:pointer;
+  }
+
+  /* ---------- envelope ---------- */
+  #envelope-area{ gap:16px; }
+  .envelope-wrap{
+    width:min(80vw,300px);
+    aspect-ratio:3/2;
+    position:relative;
+    cursor:pointer;
+  }
+  .envelope-body{
+    position:absolute;
+    inset:0;
+    background:linear-gradient(180deg,#fff,#fdf1e4);
+    border-radius:8px;
+    box-shadow:0 18px 40px rgba(120,40,80,.25);
+    overflow:hidden;
+  }
+  .envelope-body::before,.envelope-body::after{
+    content:"";
+    position:absolute;
+    top:0;
+    width:0;
+    height:0;
+    border-top:80px solid #f3ddc2;
+  }
+  .envelope-body::before{ left:0; border-left:150px solid transparent; }
+  .envelope-body::after{ right:0; border-right:150px solid transparent; }
+  .envelope-seal{
+    position:absolute;
+    top:38%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    font-size:2.2rem;
+    z-index:2;
+    transition:opacity .3s ease;
+  }
+  .envelope-flap{
+    position:absolute;
+    top:0; left:0; right:0;
+    height:50%;
+    background:linear-gradient(135deg,var(--pink),var(--purple));
+    clip-path:polygon(0 0,100% 0,50% 100%);
+    transform-origin:top center;
+    transition:transform .6s cubic-bezier(.4,.2,.2,1);
+    z-index:3;
+  }
+  .envelope-wrap.open .envelope-flap{ transform:rotateX(180deg); }
+  .envelope-wrap.open .envelope-seal{ opacity:0; }
+  .envelope-letter{
+    max-width:420px;
+    background:#fff;
+    border-radius:16px;
+    padding:26px 28px;
+    box-shadow:0 14px 30px rgba(120,40,80,.16);
+    font-family:'Caveat',cursive;
+    font-size:1.4rem;
+    line-height:1.45;
+    text-align:left;
+    max-height:0;
+    opacity:0;
+    overflow:hidden;
+    transition:max-height .8s ease, opacity .8s ease, margin .8s ease;
+  }
+  .envelope-letter.show{
+    max-height:600px;
+    opacity:1;
+    margin-top:6px;
+  }
+  .envelope-hint{ font-size:.85rem; opacity:.65; }
+
+  /* ---------- wheel ---------- */
+  #wheel-area{ gap:22px; }
+  #wheel-holder{
+    position:relative;
+    width:min(78vw,320px);
+    aspect-ratio:1/1;
+  }
+  #wheel{
+    width:100%;
+    height:100%;
+    border-radius:50%;
+    border:6px solid #fff;
+    box-shadow:0 18px 40px rgba(120,40,80,.28);
+    position:relative;
+    transition:transform 4.5s cubic-bezier(.17,.87,.28,1);
+  }
+  #wheel span{
+    position:absolute;
+    left:50%;
+    top:8%;
+    transform-origin:0 42%;
+    font-size:.7rem;
+    font-weight:700;
+    color:#fff;
+    width:90px;
+    text-align:center;
+    text-shadow:0 1px 3px rgba(0,0,0,.35);
+  }
+  #pointer{
+    position:absolute;
+    top:-14px;
+    left:50%;
+    transform:translateX(-50%);
+    font-size:2rem;
+    z-index:3;
+    filter:drop-shadow(0 4px 4px rgba(0,0,0,.25));
+  }
+  #spin-btn{
+    border:none;
+    padding:15px 38px;
+    font-size:1rem;
+    font-weight:700;
+    border-radius:999px;
+    background:linear-gradient(90deg,var(--gold),var(--pink-deep));
+    color:#fff;
+    cursor:pointer;
+    box-shadow:0 10px 26px rgba(255,61,127,.35);
+  }
+  #spin-btn:disabled{ opacity:.6; }
+
+  /* ---------- spin our story (second wheel) ---------- */
+  #story-wheel-holder{
+    position:relative;
+    width:min(78vw,320px);
+    aspect-ratio:1/1;
+  }
+  #story-wheel{
+    width:100%;
+    height:100%;
+    border-radius:50%;
+    border:6px solid #fff;
+    box-shadow:0 18px 40px rgba(120,40,80,.28);
+    position:relative;
+    transition:transform 4.5s cubic-bezier(.17,.87,.28,1);
+  }
+  #story-wheel span{
+    position:absolute;
+    left:50%;
+    top:8%;
+    transform-origin:0 42%;
+    font-size:.7rem;
+    font-weight:700;
+    color:#fff;
+    width:90px;
+    text-align:center;
+    text-shadow:0 1px 3px rgba(0,0,0,.35);
+  }
+  #story-pointer{
+    position:absolute;
+    top:-14px;
+    left:50%;
+    transform:translateX(-50%);
+    font-size:2rem;
+    z-index:3;
+    filter:drop-shadow(0 4px 4px rgba(0,0,0,.25));
+  }
+  #story-spin-btn{
+    margin-top:22px;
+    border:none;
+    padding:15px 38px;
+    font-size:1rem;
+    font-weight:700;
+    border-radius:999px;
+    background:linear-gradient(90deg,var(--gold),var(--pink-deep));
+    color:#fff;
+    cursor:pointer;
+    box-shadow:0 10px 26px rgba(255,61,127,.35);
+  }
+  #story-spin-btn:disabled{ opacity:.6; }
+
+  @keyframes pop{ 0%{transform:scale(.7); opacity:0;} 100%{transform:scale(1); opacity:1;} }
+
+  /* ---------- finale ---------- */
+  #finale h2{ font-size:clamp(2rem,8vw,3rem); }
+  #finale .heart{ font-size:2.4rem; margin-bottom:6px; }
+  #replay-btn{
+    margin-top:14px;
+    border:2px solid var(--pink-deep);
+    background:transparent;
+    color:var(--pink-deep);
+    padding:12px 28px;
+    border-radius:999px;
+    font-weight:700;
+    cursor:pointer;
+  }
+  #fireworks-btn{
+    margin-top:22px;
+    border:none;
+    background:linear-gradient(90deg,var(--gold),var(--pink-deep));
+    color:#fff;
+    padding:13px 30px;
+    border-radius:999px;
+    font-weight:700;
+    cursor:pointer;
+    box-shadow:0 10px 26px rgba(255,61,127,.35);
+  }
+
+  /* ---------- music control ---------- */
+  #music-ctrl{
+    position:fixed;
+    bottom:18px;
+    right:18px;
+    z-index:40;
+    width:52px;
+    height:52px;
+    border-radius:50%;
+    border:none;
+    background:#fff;
+    box-shadow:0 8px 20px rgba(120,40,80,.3);
+    font-size:1.3rem;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+  }
+
+  .confetti-piece{
+    position:fixed;
+    top:-12px;
+    z-index:60;
+    pointer-events:none;
+    border-radius:2px;
+    animation:fall linear forwards;
+  }
+  @keyframes fall{
+    to{ transform:translateY(108vh) rotate(540deg); opacity:.9; }
+  }
+
+  /* ---------- loading screen ---------- */
+  #loading-screen{
+    position:fixed;
+    inset:0;
+    z-index:200;
+    background:linear-gradient(180deg,#fdf6ee,#f3dcc4);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:20px;
+    transition:opacity .7s ease;
+  }
+  #loading-screen.fade-out{ opacity:0; pointer-events:none; }
+  #loading-text{
+    font-family:'Caveat',cursive;
+    font-size:clamp(1.6rem,6vw,2.4rem);
+    color:var(--pink-deep);
+    transition:opacity .35s ease;
+  }
+  .loading-heart{
+    font-size:1.8rem;
+    margin-bottom:10px;
+    animation:pulse-heart-solo 1.2s ease-in-out infinite;
+  }
+  @keyframes pulse-heart-solo{
+    0%,100%{ transform:scale(1); }
+    50%{ transform:scale(1.2); }
+  }
+
+  /* ---------- compliment line ---------- */
+  #compliment-line{
+    font-family:'Caveat',cursive;
+    font-size:1.3rem;
+    color:var(--purple);
+    max-width:380px;
+    margin-top:-6px;
+  }
+
+  /* ---------- reminder toast ---------- */
+  #reminder-toast{
+    position:fixed;
+    left:50%;
+    bottom:84px;
+    transform:translateX(-50%) translateY(20px);
+    z-index:45;
+    background:#fff;
+    color:var(--ink);
+    padding:12px 20px;
+    border-radius:999px;
+    box-shadow:0 12px 28px rgba(120,40,80,.22);
+    font-size:.9rem;
+    font-weight:600;
+    opacity:0;
+    transition:opacity .5s ease, transform .5s ease;
+    pointer-events:none;
+    max-width:88vw;
+    text-align:center;
+  }
+  #reminder-toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+
+  /* ---------- mini "open when" envelopes ---------- */
+  #envelope-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:22px;
+    width:100%;
+    max-width:360px;
+  }
+  .mini-envelope .envelope-wrap{ width:100%; max-width:100%; aspect-ratio:5/3; margin:0 auto; }
+  .mini-envelope .envelope-label{
+    font-family:'Caveat',cursive;
+    font-size:1.3rem;
+    color:var(--ink);
+    margin-top:8px;
+  }
+  .mini-envelope .envelope-letter{ font-size:1.2rem; max-width:100%; }
+
+  /* ---------- reveal card grids (reasons / affirmations) ---------- */
+  .reveal-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(90px,1fr));
+    gap:12px;
+    width:100%;
+    max-width:520px;
+  }
+  .reveal-card{
+    border:none;
+    background:rgba(255,255,255,.75);
+    border-radius:14px;
+    padding:18px 10px;
+    cursor:pointer;
+    font-size:1.6rem;
+    box-shadow:0 8px 18px rgba(120,40,80,.12);
+    transition:transform .2s ease, background .2s ease;
+  }
+  .reveal-card.found{ background:linear-gradient(135deg,var(--pink),var(--purple)); color:#fff; }
+  .reveal-card:active{ transform:scale(.94); }
+
+  /* ---------- timeline ---------- */
+  .timeline{
+    position:relative;
+    max-width:420px;
+    width:100%;
+    padding-left:28px;
+    text-align:left;
+  }
+  .timeline::before{
+    content:"";
+    position:absolute;
+    left:7px;
+    top:6px;
+    bottom:6px;
+    width:2px;
+    background:linear-gradient(180deg,var(--pink),var(--purple));
+    opacity:.4;
+  }
+  .timeline-item{
+    position:relative;
+    margin-bottom:26px;
+    opacity:0;
+    transform:translateX(-14px);
+    transition:opacity .6s ease, transform .6s ease;
+  }
+  .timeline-item.show{ opacity:1; transform:translateX(0); }
+  .timeline-item::before{
+    content:"";
+    position:absolute;
+    left:-28px;
+    top:4px;
+    width:12px;
+    height:12px;
+    border-radius:50%;
+    background:var(--pink-deep);
+    box-shadow:0 0 0 4px rgba(224,122,95,.2);
+  }
+  .timeline-item p{
+    font-family:'Caveat',cursive;
+    font-size:1.4rem;
+    margin:0;
+    line-height:1.3;
+  }
+
+  /* ---------- memory letters (click to open) ---------- */
+  #memories-list{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+    max-width:480px;
+    width:100%;
+  }
+  .memory-card{
+    background:rgba(255,255,255,.85);
+    border-radius:18px;
+    padding:22px 24px;
+    text-align:left;
+    box-shadow:0 12px 26px rgba(120,40,80,.15);
+    cursor:pointer;
+  }
+  .memory-card .memory-title{
+    font-family:'Caveat',cursive;
+    font-size:1.6rem;
+    color:var(--pink-deep);
+    margin:0 0 4px;
+  }
+  .memory-card .memory-hint{
+    font-size:.8rem;
+    opacity:.6;
+  }
+  .memory-body{
+    max-height:0;
+    overflow:hidden;
+    opacity:0;
+    transition:max-height .8s ease, opacity .8s ease, margin .8s ease;
+  }
+  .memory-body.open{
+    max-height:4000px;
+    opacity:1;
+    margin-top:14px;
+  }
+  .memory-body p{
+    margin:0 0 14px;
+    line-height:1.65;
+    font-size:1rem;
+  }
+  .memory-body p:last-child{ margin-bottom:0; }
+  .memory-body p.quote{
+    font-family:'Caveat',cursive;
+    font-size:1.4rem;
+    color:var(--purple);
+    text-align:center;
+    margin:20px 0;
+  }
+
+  /* ---------- favourite things ---------- */
+  #favthings-card{
+    background:rgba(255,255,255,.85);
+    border-radius:18px;
+    padding:26px 24px;
+    max-width:420px;
+    width:100%;
+    box-shadow:0 12px 26px rgba(120,40,80,.15);
+  }
+  #favthings-list{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin-bottom:16px;
+    text-align:left;
+  }
+  #favthings-list p{
+    font-family:'Caveat',cursive;
+    font-size:1.35rem;
+    margin:0;
+    opacity:0;
+    transform:translateY(6px);
+    animation:fade-in-line .5s ease forwards;
+  }
+  @keyframes fade-in-line{ to{ opacity:1; transform:translateY(0); } }
+  #favthings-btn{
+    border:none;
+    background:linear-gradient(90deg,var(--pink-deep),var(--purple));
+    color:#fff;
+    padding:12px 26px;
+    border-radius:999px;
+    font-weight:700;
+    cursor:pointer;
+  }
+  #favthings-btn:disabled{ opacity:.5; cursor:default; }
+
+  /* ---------- secret button ---------- */
+  #secret-btn{
+    position:fixed;
+    bottom:18px;
+    left:18px;
+    z-index:40;
+    border:1px dashed rgba(74,53,39,.35);
+    background:rgba(255,255,255,.7);
+    color:var(--ink);
+    padding:8px 14px;
+    border-radius:999px;
+    font-size:.75rem;
+    cursor:pointer;
+    max-width:140px;
+  }
+
+  /* ---------- open my journal ---------- */
+  #journal-btn{
+    margin-top:18px;
+    border:2px solid var(--pink-deep);
+    background:transparent;
+    color:var(--pink-deep);
+    padding:12px 26px;
+    border-radius:999px;
+    font-weight:700;
+    cursor:pointer;
+  }
+  #journal-text{
+    font-family:'Caveat',cursive;
+    font-size:1.4rem;
+    max-width:400px;
+    margin-top:16px;
+    min-height:1.4em;
+    opacity:0;
+    transition:opacity .4s ease;
+  }
+  #journal-text.show{ opacity:1; }
+
+  /* ---------- floating sparkles ---------- */
+  .sparkle{
+    position:absolute;
+    font-size:.9rem;
+    opacity:0;
+    animation:twinkle ease-in-out infinite;
+    border:none;
+    background:none;
+    padding:0;
+  }
+  .sparkle.clickable{
+    pointer-events:auto;
+    cursor:pointer;
+    font-size:1.1rem;
+  }
+  @keyframes twinkle{
+    0%,100%{ opacity:0; transform:scale(.6); }
+    50%{ opacity:.9; transform:scale(1.1); }
+  }
+
+  /* ---------- clickable finale heart ---------- */
+  #finale .heart{ cursor:pointer; transition:transform .2s ease; }
+  #finale .heart:active{ transform:scale(1.3); }
+  #heart-reveal{
+    font-family:'Caveat',cursive;
+    font-size:1.4rem;
+    color:var(--pink-deep);
+    min-height:1.4em;
+    opacity:0;
+    transition:opacity .4s ease;
+  }
+  #heart-reveal.show{ opacity:1; }
+
+  /* ---------- ending ---------- */
+  #ending-message{
+    font-family:'Caveat',cursive;
+    font-size:clamp(1.5rem,5vw,2.1rem);
+    line-height:1.5;
+    white-space:pre-line;
+    max-width:480px;
+  }
+</style>
+</head>
+<body>
+
+<div id="loading-screen">
+  <div>
+    <div class="loading-heart">💛</div>
+    <div id="loading-text"></div>
+  </div>
+</div>
+
+<div id="bg-layer"></div>
+<div id="fireworks-dim"></div>
+<canvas id="fireworks-canvas"></canvas>
+
+<audio id="bg-audio" src="assets/audio/song.mp3" loop preload="none"></audio>
+<button id="music-ctrl" title="play/pause music">🔇</button>
+<button id="secret-btn">Don't Press</button>
+<div id="reminder-toast"></div>
+
+<!-- ============ HERO ============ -->
+<section id="hero">
+  <div class="eyebrow">Happy International Girlfriend's Day</div>
+  <div id="hero-title" class="script">LJ</div>
+  <p class="sub">A whole website, just for you. Turn your sound on and scroll slowly. I made this myself. 💛</p>
+  <p class="script" id="compliment-line"></p>
+  <button id="begin-btn">Tap to Begin ✨</button>
+</section>
+
+<div class="hidden-until-start">
+
+<!-- ============ GUIDE ============ -->
+<section id="guide-area">
+  <div class="eyebrow">a quick guide</div>
+  <h2 class="section-title">How To Explore This</h2>
+  <p class="section-sub">Everything on this site does something. Here's what to look for.</p>
+  <div id="guide-list"></div>
+</section>
+
+<!-- ============ GALLERY ============ -->
+<section id="gallery">
+  <div class="eyebrow">us</div>
+  <h2 class="section-title">A Few of My Favorites</h2>
+  <div id="gallery-grid"></div>
+</section>
+
+<!-- ============ VIDEO MEMORIES ============ -->
+<section id="video-area">
+  <div class="eyebrow">us, in motion</div>
+  <h2 class="section-title">A Few Seconds of Us</h2>
+  <p class="section-sub">Tap to play.</p>
+  <div id="video-grid"></div>
+</section>
+
+<!-- ============ DISCOVER ============ -->
+<section id="discover">
+  <div class="eyebrow">go exploring</div>
+  <h2 class="section-title">Some Things I Hid For You To Find</h2>
+  <p class="section-sub">Tap the flowers. Flip the photos above. Keep an eye on the corners. Not everything shows itself right away.</p>
+  <div id="discover-progress">💛 <span id="discover-count">0</span> / <span id="discover-total">0</span> found</div>
+  <div id="flower-garden"></div>
+</section>
+
+<!-- ============ REASONS I LOVE YOU ============ -->
+<section id="reasons-area">
+  <div class="eyebrow">a running list</div>
+  <h2 class="section-title">Reasons I Love You</h2>
+  <p class="section-sub">Tap each one.</p>
+  <div class="reveal-grid" id="reasons-grid"></div>
+</section>
+
+<!-- ============ TIMELINE ============ -->
+<section id="timeline-area">
+  <div class="eyebrow">not dates, moments</div>
+  <h2 class="section-title">Us, So Far</h2>
+  <div class="timeline" id="timeline"></div>
+</section>
+
+<!-- ============ MEMORIES / LETTERS ============ -->
+<section id="memories-area">
+  <div class="eyebrow">looking back</div>
+  <h2 class="section-title">Letters About Us</h2>
+  <p class="section-sub">Tap to open. More of these will show up here over time.</p>
+  <div id="memories-list"></div>
+</section>
+
+<!-- ============ SPIN TO WIN ============ -->
+<section id="wheel-area">
+  <div class="eyebrow">just for fun</div>
+  <h2 class="section-title">Spin to Win a Prize</h2>
+  <p class="section-sub">Every single prize on this wheel is the same. I promise it's worth it.</p>
+  <div id="wheel-holder">
+    <div id="pointer">📍</div>
+    <div id="wheel"></div>
+  </div>
+  <button id="spin-btn">Spin the Wheel 🎡</button>
+</section>
+
+<!-- ============ IF YOU EVER DOUBT YOURSELF ============ -->
+<section id="affirmations-area">
+  <div class="eyebrow">for the hard days</div>
+  <h2 class="section-title">If You Ever Doubt Yourself</h2>
+  <p class="section-sub">Tap one. Read it slowly.</p>
+  <div class="reveal-grid" id="affirmations-grid"></div>
+</section>
+
+<!-- ============ FAVOURITE THINGS ============ -->
+<section id="favthings-area">
+  <div class="eyebrow">still counting</div>
+  <h2 class="section-title">Favourite Things About You</h2>
+  <div id="favthings-card">
+    <div id="favthings-list"></div>
+    <button id="favthings-btn">Reveal Another</button>
+  </div>
+</section>
+
+<!-- ============ LITTLE THINGS YOU NEVER KNEW ============ -->
+<section id="littlethings-area">
+  <div class="eyebrow">confessions</div>
+  <h2 class="section-title">Little Things You Never Knew</h2>
+  <p class="section-sub">Tap one.</p>
+  <div class="reveal-grid" id="littlethings-grid"></div>
+  <button id="journal-btn">📖 Open My Journal</button>
+  <p id="journal-text"></p>
+</section>
+
+<!-- ============ SPIN OUR STORY ============ -->
+<section id="story-wheel-area">
+  <div class="eyebrow">one more spin</div>
+  <h2 class="section-title">Spin Our Story</h2>
+  <p class="section-sub">Wherever it lands, it's true.</p>
+  <div id="story-wheel-holder">
+    <div id="story-pointer">📍</div>
+    <div id="story-wheel"></div>
+  </div>
+  <button id="story-spin-btn">Spin ✨</button>
+</section>
+
+<!-- ============ OPEN WHEN... ENVELOPES ============ -->
+<section id="envelope-area">
+  <div class="eyebrow">open these whenever you need to</div>
+  <h2 class="section-title">Letters, Sealed For You</h2>
+  <div id="envelope-grid"></div>
+</section>
+
+<!-- ============ FINALE ============ -->
+<section id="finale">
+  <div class="heart" id="finale-heart">💛</div>
+  <div id="heart-reveal"></div>
+  <p id="ending-message"></p>
+  <button id="fireworks-btn">🎆 Fireworks</button>
+  <button id="replay-btn">Watch It Again 🔁</button>
+</section>
+
+</div>
+
+<div class="modal-overlay" id="win-modal">
+  <div class="modal-card">
+    <div class="modal-icon" id="win-photo"><span>😏</span></div>
+    <h3>You Won...</h3>
+    <p id="win-text">Me. Obviously. Every prize on this wheel was always going to be me.</p>
+    <button class="modal-close" id="close-modal">Cute. Close.</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="discover-modal">
+  <div class="modal-card">
+    <div class="modal-icon" id="discover-modal-icon"><span>🌸</span></div>
+    <h3 id="discover-modal-title">Note found</h3>
+    <p id="discover-modal-text"></p>
+    <button class="modal-close" id="discover-modal-close">Close</button>
+  </div>
+</div>
+
+<script>
+/* =========================================================
+   CONFIG — edit everything in this block, layout code below
+   never needs to change.
+   ========================================================= */
+const CONFIG = {
+  // the "Guide" section — a quick legend of everything there is to do on the site
+  guide: [
+    { icon: "📸", text: "Flip a photo to reveal a hidden joke" },
+    { icon: "🎥", text: "Tap a video poster to watch a clip" },
+    { icon: "🌸", text: "Tap a flower to bloom it open and read a note" },
+    { icon: "💗", text: "Keep an eye on the corners as you scroll, some secrets only show up there" },
+    { icon: "💫", text: "Tap a card to reveal a reason, an affirmation, or a little thing you never knew" },
+    { icon: "⭐", text: "Tap a floating star for a random memory" },
+    { icon: "🎡", text: "Spin either wheel for a surprise" },
+    { icon: "💌", text: "Open an envelope to read a letter" },
+    { icon: "📖", text: "Open the journal for a random thought" },
+    { icon: "❤️", text: "Tap the heart at the very end" },
+    { icon: "🤫", text: "There's a button that says \"Don't Press.\" Your choice." },
+    { icon: "🎆", text: "Set off the fireworks whenever you want" }
+  ],
+
+  // photos drifting behind the whole page — each one is labeled with one of her names
+  floatPhotos: [
+    { file: "photo_09.jpg", name: "Olajumoke" },
+    { file: "photo_10.jpg", name: "Eniolueafekite" },
+    { file: "photo_11.jpg", name: "Moyosoreoluwa" },
+    { file: "photo_12.jpg", name: "Oluwalonimi" },
+    { file: "photo_13.jpg", name: "Tantoluwa" },
+    { file: "photo_14.jpg", name: "Ojuolope" },
+    { file: "photo_15.jpg", name: "Kofoworola" },
+    { file: "photo_16.jpg", name: "Yasmeen" },
+    { file: "photo_17.jpg", name: "Amdallat" },
+    { file: "photo_18.jpg", name: "Zipporah" },
+    { file: "photo_19.jpg", name: "Ayinke" }
+  ],
+
+  // gallery grid photos + captions (edit captions freely)
+  gallery: [
+    { file: "photo_01.jpg", caption: "that day 🥹" },
+    { file: "photo_02.jpg", caption: "my favorite person" },
+    { file: "photo_03.jpg", caption: "us, being us" },
+    { file: "photo_04.jpg", caption: "you laughing at nothing" },
+    { file: "photo_05.jpg", caption: "date night" },
+    { file: "photo_06.jpg", caption: "i'm obsessed, sorry" },
+    { file: "photo_07.jpg", caption: "ok this one's just a meme 😂", secret: "yeah I don't know why this is in here either, I just thought it was funny" },
+    { file: "photo_08.jpg", caption: "us, on repeat" },
+    { file: "photo_26.jpg", caption: "made this thinking of you" }
+  ],
+
+  // extra photos not placed anywhere yet — add more gallery/float entries above whenever you want to use these:
+  // photo_17.jpg, photo_18.jpg, photo_19.jpg, photo_20.jpg, photo_21.jpg, photo_22.jpg, photo_23.jpg,
+  // photo_24.jpg, photo_25.jpg, photo_27.jpg, photo_28.jpg, photo_29.jpg, photo_30.jpg, photo_31.jpg
+
+  // video memories — tap a poster to play. captions are placeholders, edit freely
+  videos: [
+    { file: "video_01.mp4", poster: "poster_01.jpg", caption: "a little clip of us" },
+    { file: "video_02.mp4", poster: "poster_02.jpg", caption: "you, mid-laugh" },
+    { file: "video_03.mp4", poster: "poster_03.jpg", caption: "one to watch again" },
+    { file: "video_04.mp4", poster: "poster_04.jpg", caption: "my favorite one" }
+  ],
+
+  // each note becomes a flower in the "discover" garden — click a flower to bloom it open
+  notes: [
+    "I still can't believe I get to call you mine.",
+    "I hope you always see yourself the way I see you.",
+    "I love the way life slows down whenever I'm with you.",
+    "I don't just love you. I love who I become when I'm with you.",
+    "You make every ordinary moment feel like it deserves to be remembered.",
+    "Loving you has always felt easy.",
+    "Thank you for making life feel so much lighter.",
+    "You're the safest place I've ever found.",
+    "Every day with you feels like another answered prayer.",
+    "I love the woman you are, but I'm even more excited about the woman you're becoming.",
+    "I promise I'll be there for every version of you.",
+    "Watching you grow is one of my favourite parts of loving you.",
+    "You make me believe that forever isn't long enough.",
+    "You never have to earn my love. You already have it.",
+    "You're my peace in every season.",
+    "I love that we fight for each other, not against each other.",
+    "Thank you for being my teammate through everything.",
+    "You make me want to become a better man every single day.",
+    "Somehow, you always make everything feel okay.",
+    "I smile a little every time your name pops up.",
+    "You make home feel like a person instead of a place.",
+    "I never get tired of choosing you.",
+    "You make my future look beautiful.",
+    "Even your quiet moments are my favourite.",
+    "I love how naturally we fit together.",
+    "You make my heart feel at home.",
+    "You are still the best decision I've ever made.",
+    "Every version of us is my favourite story.",
+    "You're still my favourite hello and my hardest goodbye.",
+    "I couldn't have dreamed up someone more perfect for me.",
+    "You make love feel simple.",
+    "I love the way your heart loves people.",
+    "You remind me that the best things take time.",
+    "Thank you for making my life brighter just by being in it.",
+    "If I had to do this life again, I'd still find you.",
+    "You are, and always will be, my favourite person.",
+    "You are my greatest blessing wrapped up as my best friend.",
+    "I hope you never question how deeply you're loved.",
+    "You are magic to me, and I hope you never stop believing that.",
+    "My favourite future is the one that has you in it.",
+    "I still remember when we first started talking and you were on such a strict routine. You were so disciplined. I loved that about you then, and I still do.",
+    "One of the easiest things I've ever done is trust you. I never have to wonder where your heart is, because I know how much loyalty and devotion mean to you.",
+    "One of the things I admire most is your strength. Life has asked a lot of you, yet somehow you've come through it all with kindness still intact.",
+    "Thank you for choosing softness when the world has given you every reason not to.",
+    "Can I let you in on a little secret?\nWhenever I'm picking you up, I always park somewhere I can see you before you see me.\nThose few seconds of watching you walk towards me never get old.",
+    "You have absolutely no business looking that good in a dress.\nBut I'm very grateful that you do.",
+    "You're one of the most elegant women I've ever met.\nIt still catches me off guard.",
+    "Also...\nYou're an amazing kisser.\nSomeone had to say it.",
+    "You're such a funny drunk.\nIt's honestly one of my favourite versions of you.",
+    "I love your soft side.\nThe world gets the boss lady.\nI get the gentle version too.\nThat's a privilege.",
+    "Watching you become calmer over the years has been beautiful.\nGrowth looks really good on you.",
+    "Everything about you fascinates me.\nI hope I never stop discovering new things about you.",
+    "I never want to stop learning who you are.\nI think that's one of the best parts of loving someone.",
+    "I'm your biggest fan.\nI'll always be cheering for you.",
+    "I can't wait to watch you keep taking over the world.\nI'll be right beside you.",
+    "One day we'll laugh about all of this from a café in Monaco.",
+    "And after Monaco...\nLet's get lost in Bali.",
+    "Then we'll keep collecting cities until everywhere reminds us of each other.",
+    "Thank you for making love feel peaceful.",
+    "Happy International Girlfriend's Day, my girlfriend.\nI love you more than these little notes could ever explain."
+  ],
+
+  // one joke/secret per gallery photo — revealed when she flips the photo (hover on desktop, tap on mobile)
+  photoSecrets: [
+    "you were mid-sentence here and somehow still the main character",
+    "I still don't know how you make bad lighting look this good",
+    "this is the face that ended every argument I tried to win",
+    "certified: my favorite human, no refunds",
+    "if lost, please return to me. reward: unlimited hugs.",
+    "you have a cute bum 😉",
+    "you serve premium tea ☕"
+  ],
+
+  // 4 secrets hidden in the corners of the flower garden — only appear once she scrolls them into view
+  hiddenCorners: [
+    "you found one. there are 3 more hiding. 👀",
+    "okay but did you really think I'd hide only sweet stuff? here's a secret: you snore a little. I love it anyway.",
+    "top secret: I asked your best friend what your favorite candy is. don't tell her I told you I know.",
+    "last one. thank you for finding all of them. now go open the envelope. 💌"
+  ],
+
+  // wheel slice labels — visually different, all funnel to the same win modal
+  wheelPrizes: [
+    "Free Hug", "Unlimited Kisses", "Movie Night (my pick)", "My Whole Heart",
+    "1 Free 'I'm Sorry'", "Cuddle Marathon", "Grand Prize", "Me, Obviously"
+  ],
+
+  winTitle: "You Won...",
+  winText: "Me. Obviously. Every single prize on this wheel was always going to be me.",
+  winPhoto: "assets/photos/me.jpg", // your face — the only real prize
+
+  // shown one at a time on the loading screen, before anything else appears
+  loadingLines: [
+    "Gathering all the reasons I love you...",
+    "One second... I'm still falling for you.",
+    "Building something as beautiful as you."
+  ],
+
+  // a small toast that appears every 20-40 seconds once she's exploring
+  reminders: [
+    "❤️ Just a reminder: you're incredibly loved.",
+    "✨ Fun fact: you're still my favourite person.",
+    "💌 Reminder: I'd choose you every single time.",
+    "🌙 Wherever you are right now, I hope you feel it too.",
+    "🫶 You are so deeply, thoroughly loved.",
+    "☀️ Just checking in, still obsessed with you."
+  ],
+
+  // one shown at random under the hero subtitle each visit
+  compliments: [
+    "You're magic to me.",
+    "You're always an extension of me.",
+    "You will always have an ally in me.",
+    "Wherever you are girl, that's where I call my home.",
+    "I will always choose you."
+  ],
+
+  // "open when..." letters — each is its own little envelope
+  envelopes: [
+    { label: "Open when you miss me", letter: "If you're reading this, it means some part of you is missing me right now, and I promise, the feeling is mutual, always. Close your eyes for a second and picture me right there with you. That's me, missing you right back." },
+    { label: "Open when you need encouragement", letter: "Whatever it is you're facing, you are more capable than you know, and stronger than you feel today. I've watched you push through things that would've stopped most people, and you always find your way. I believe in you completely." },
+    { label: "Open when you want to smile", letter: "Okay, quick reminder: you once laughed so hard at your own joke you couldn't finish telling it. I still think about that. You are, objectively, the funniest person I know, and I don't say that lightly." },
+    { label: "Open when you're doubting yourself", letter: "Whatever the doubt is telling you right now, it's wrong. You are enough exactly as you are, in this exact moment, no version of you required to earn that. I chose you, I choose you, and I'll keep choosing you." },
+    { label: "Open when you want to remember us", letter: "Remember us on the beach, us laughing at 2am over nothing, us figuring out how to be better for each other one ordinary day at a time. That's the story I'm proudest of. Happy International Girlfriend's Day, LJ. Here's to every chapter still coming." }
+  ],
+
+  // "Reasons I Love You" — click a card, reveal a reason
+  reasons: [
+    "The way you love people.",
+    "The way you make me feel safe.",
+    "The way you laugh.",
+    "The way you believe in me.",
+    "The woman you're becoming.",
+    "Your kindness.",
+    "Your heart.",
+    "How you remember the small things.",
+    "How you fight for the people you love.",
+    "Your patience with me, even when I don't deserve it.",
+    "How easily you make a house feel like home.",
+    "The way you say my name.",
+    "How you never let me settle for less than I deserve.",
+    "Simply, all of you."
+  ],
+
+  // "If You Ever Doubt Yourself" — click a card, reveal an affirmation
+  affirmations: [
+    "You are enough.",
+    "You are deeply loved.",
+    "You are stronger than you realise.",
+    "I'm incredibly proud of you.",
+    "You never have to earn my love.",
+    "I'll always choose you.",
+    "You are allowed to rest.",
+    "Your feelings are valid, always.",
+    "You are exactly where you're meant to be.",
+    "You are so much more than your hardest days."
+  ],
+
+  // timeline — moments, not dates
+  timelineMoments: [
+    "The day I realised you felt like home.",
+    "The first time you made me laugh until it hurt.",
+    "The night we talked until the sun came up.",
+    "The day I knew I wanted forever.",
+    "Every ordinary Tuesday since.",
+    "Today.",
+    "Every tomorrow."
+  ],
+
+  // longer letters/reflections — click a card to open it. Add more entries here
+  // any time; each one just needs a short title and an array of paragraphs
+  // (start a paragraph with a quote mark to have it styled as a quote).
+  memories: [
+    {
+      title: "Looking back is actually crazy.",
+      paragraphs: [
+        "I remember when you didn't hug boys. 😂 You'd awkwardly offer a handshake instead, and sometimes you wouldn't even shake my hand. It's funny how life changes.",
+        "I remember your first day at Demola International Driving School. I taught you how to drive myself. Feels like yesterday. Now look at you.",
+        "Shoutout to Itunu for holding it down with me through all of that too.",
+        "If you were a more serious student, you'd probably be an international driver by now 😂",
+        "I remember my Dubai trip in 2022, when you were helping me edit all the videos I had taken. I still smile when I remember how you added clips from your own Dubai trip too. It was such a small thing, but it made it feel like we had travelled together somehow.",
+        "I remember watching you sell cocktails and guinea fowl. I remember DSP, the logo designs, the ideas, and all the dreams you carried. Even then, I could see someone who was determined to build something meaningful.",
+        "And now, when I look at you, all I see is growth.",
+        "One of my favourite things about loving you is that I've had the privilege of watching you become. I've seen different versions of you over the years, and somehow each one has been more beautiful than the last.",
+        "You're magic to me. You always have been.",
+        "Sometimes we get so caught up chasing what's next that we forget to stop and admire how far we've already come. Looking back reminds me that none of your growth happened by accident. Every challenge, every lesson, every small beginning helped shape the incredible woman standing before me today.",
+        "\"Make you remember... nothing for this life na accidental.\"",
+        "Maybe that's true for us too.",
+        "Happy International Girlfriend's Day, my girlfriend. ❤️"
+      ]
+    }
+  ],
+
+  // "Favourite Things About You" — revealed one at a time, on demand
+  favouriteThings: [
+    "I love how easy life feels with you.",
+    "I love how you make me want to become a better man.",
+    "I love watching you grow.",
+    "I love how safe I feel around you.",
+    "I love how we always find our way back to each other.",
+    "I love your laugh before you even finish the joke.",
+    "I love how you remember what matters to me.",
+    "I love that you're still the last person I want to talk to before I sleep.",
+    "I love who I am when I'm with you.",
+    "I love you. Simply, endlessly, and on purpose."
+  ],
+
+  // the secret "don't press" button
+  secretReveal: "Too late. You already stole my heart.",
+
+  // shown when the heart in the finale is tapped
+  heartReveal: "You still have it.",
+
+  // "Little Things You Never Knew" — click a card, reveal a confession
+  littleThings: [
+    "I still smile before I see you because I know you're about to walk through the door.",
+    "Sometimes I catch myself watching you instead of whatever we're supposed to be doing.",
+    "I never rush to get out of the car when I pick you up. I like having those first few seconds just to admire you.",
+    "Every time you wear a dress, I pretend I'm used to it. I'm not.",
+    "I don't think I've ever stopped being impressed by you."
+  ],
+
+  // places for the "Spin Our Story" wheel
+  places: [
+    "Monaco, for coffee and slow mornings.",
+    "Bali, to get properly lost together.",
+    "Wherever makes us feel like this again."
+  ],
+
+  // the full-screen closing message
+  endingMessage: "I loved you yesterday.\nI love you today.\nI'll love you tomorrow.\nAnd if tomorrow never comes,\nknow that every page here was written with all my heart."
+};
+
+/* ========================================================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  /* ---------- loading screen ---------- */
+  const loadingScreen = document.getElementById("loading-screen");
+  const loadingText = document.getElementById("loading-text");
+  let loadIdx = 0;
+  function showLoadingLine(){
+    loadingText.style.opacity = 0;
+    setTimeout(() => {
+      loadingText.textContent = CONFIG.loadingLines[loadIdx % CONFIG.loadingLines.length];
+      loadingText.style.opacity = 1;
+      loadIdx++;
+    }, 200);
+  }
+  showLoadingLine();
+  const loadingInterval = setInterval(showLoadingLine, 750);
+  setTimeout(() => {
+    clearInterval(loadingInterval);
+    loadingScreen.classList.add("fade-out");
+    setTimeout(() => loadingScreen.remove(), 800);
+  }, 2400);
+
+  /* ---------- compliment of the visit ---------- */
+  const complimentEl = document.getElementById("compliment-line");
+  if(CONFIG.compliments.length){
+    complimentEl.textContent = CONFIG.compliments[Math.floor(Math.random()*CONFIG.compliments.length)];
+  }
+
+  /* ---------- background balloons ---------- */
+  const bgLayer = document.getElementById("bg-layer");
+  const balloonColors = ["#f4a261","#f2b880","#e07a5f","#c65d3b","#f6c99a"];
+  for(let i=0;i<10;i++){
+    const b = document.createElement("div");
+    b.className = "balloon";
+    const left = Math.random()*100;
+    const dur = 10 + Math.random()*10;
+    const delay = Math.random()*-20;
+    b.style.left = left+"vw";
+    b.style.background = balloonColors[i % balloonColors.length];
+    b.style.animationDuration = dur+"s";
+    b.style.animationDelay = delay+"s";
+    b.style.width = (46 + Math.random()*30)+"px";
+    b.style.height = b.style.width;
+    bgLayer.appendChild(b);
+  }
+
+  /* ---------- floating photos behind whole page, each labeled with a name ---------- */
+  CONFIG.floatPhotos.forEach(item => {
+    const f = document.createElement("div");
+    f.className = "float-photo";
+    f.style.left = (Math.random()*80)+"vw";
+    f.style.top = (Math.random()*90)+"vh";
+    f.style.setProperty("--r",(Math.random()*16-8)+"deg");
+    f.style.animationDuration = (6+Math.random()*6)+"s";
+    f.style.animationDelay = (Math.random()*-6)+"s";
+    f.appendChild(makeImg(`assets/photos/${item.file}`,"💛"));
+    const fname = document.createElement("div");
+    fname.className = "fname";
+    fname.textContent = item.name;
+    f.appendChild(fname);
+    bgLayer.appendChild(f);
+  });
+
+  /* ---------- floating sparkles (stars are clickable — reveal a memory) ---------- */
+  const sparkleEmojis = ["✨","⭐","💫"];
+  for(let i=0;i<16;i++){
+    const isStar = i % 3 === 1;
+    const s = document.createElement(isStar ? "button" : "div");
+    s.className = isStar ? "sparkle clickable" : "sparkle";
+    s.textContent = sparkleEmojis[i % sparkleEmojis.length];
+    s.style.left = (Math.random()*96)+"vw";
+    s.style.top = (Math.random()*96)+"vh";
+    s.style.animationDuration = (2.5 + Math.random()*3)+"s";
+    s.style.animationDelay = (Math.random()*-4)+"s";
+    if(isStar){
+      s.setAttribute("aria-label", "Reveal a memory");
+      s.addEventListener("click", (e) => {
+        e.stopPropagation();
+        discoverIcon.innerHTML = "<span>⭐</span>";
+        discoverTitle.textContent = "A Memory";
+        discoverText.textContent = CONFIG.timelineMoments[Math.floor(Math.random()*CONFIG.timelineMoments.length)];
+        discoverModal.classList.add("show");
+      });
+    }
+    bgLayer.appendChild(s);
+  }
+
+  function makeImg(src, fallbackEmoji){
+    const img = document.createElement("img");
+    img.src = src;
+    img.alt = "";
+    img.loading = "lazy";
+    img.onerror = () => {
+      const fb = document.createElement("div");
+      fb.className = "ph-fallback";
+      fb.textContent = fallbackEmoji;
+      img.replaceWith(fb);
+    };
+    return img;
+  }
+
+  /* ---------- begin / audio gate ---------- */
+  const beginBtn = document.getElementById("begin-btn");
+  const audio = document.getElementById("bg-audio");
+  const musicCtrl = document.getElementById("music-ctrl");
+
+  beginBtn.addEventListener("click", () => {
+    document.body.classList.add("started");
+    audio.play().then(()=>{
+      musicCtrl.textContent = "🔊";
+    }).catch(()=>{
+      musicCtrl.textContent = "🔇";
+    });
+    document.getElementById("gallery").scrollIntoView({behavior:"smooth"});
+    scheduleReminder();
+  });
+
+  /* ---------- random love reminders ---------- */
+  const reminderToast = document.getElementById("reminder-toast");
+  function scheduleReminder(){
+    const delay = (20 + Math.random()*20) * 1000;
+    setTimeout(() => {
+      if(CONFIG.reminders.length){
+        reminderToast.textContent = CONFIG.reminders[Math.floor(Math.random()*CONFIG.reminders.length)];
+        reminderToast.classList.add("show");
+        setTimeout(() => reminderToast.classList.remove("show"), 5000);
+      }
+      scheduleReminder();
+    }, delay);
+  }
+
+  /* ---------- secret button ---------- */
+  const secretBtn = document.getElementById("secret-btn");
+  secretBtn.addEventListener("click", () => {
+    secretBtn.textContent = CONFIG.secretReveal;
+  });
+
+  musicCtrl.addEventListener("click", () => {
+    if(audio.paused){
+      audio.play().then(()=>musicCtrl.textContent="🔊").catch(()=>{});
+    } else {
+      audio.pause();
+      musicCtrl.textContent = "🔇";
+    }
+  });
+
+  /* ---------- guide ---------- */
+  const guideList = document.getElementById("guide-list");
+  CONFIG.guide.forEach(item => {
+    const row = document.createElement("div");
+    row.className = "guide-item";
+    row.innerHTML = `<span class="guide-icon">${item.icon}</span><span class="guide-text">${item.text}</span>`;
+    guideList.appendChild(row);
+  });
+
+  /* ---------- gallery (flip to reveal a hidden joke) ---------- */
+  const grid = document.getElementById("gallery-grid");
+  CONFIG.gallery.forEach((item,i) => {
+    const card = document.createElement("div");
+    card.className = "gcard";
+
+    const flip = document.createElement("div");
+    flip.className = "flip";
+
+    const front = document.createElement("div");
+    front.className = "face front";
+    const frame = document.createElement("div");
+    frame.className = "frame";
+    frame.appendChild(makeImg(`assets/photos/${item.file}`,"📸"));
+    front.appendChild(frame);
+    const cap = document.createElement("div");
+    cap.className = "cap";
+    cap.textContent = item.caption;
+    front.appendChild(cap);
+    const hint = document.createElement("div");
+    hint.className = "flip-hint";
+    hint.textContent = "👆";
+    front.appendChild(hint);
+
+    const back = document.createElement("div");
+    back.className = "face back";
+    const secret = item.secret || (CONFIG.photoSecrets.length ? CONFIG.photoSecrets[i % CONFIG.photoSecrets.length] : "");
+    const secretP = document.createElement("p");
+    secretP.textContent = secret;
+    back.appendChild(secretP);
+
+    flip.appendChild(front);
+    flip.appendChild(back);
+    card.appendChild(flip);
+    card.addEventListener("click", () => card.classList.toggle("flipped"));
+    grid.appendChild(card);
+  });
+
+  /* ---------- video memories (tap poster to play) ---------- */
+  const videoGrid = document.getElementById("video-grid");
+  CONFIG.videos.forEach(v => {
+    const card = document.createElement("div");
+    card.className = "video-card";
+
+    const frame = document.createElement("div");
+    frame.className = "frame";
+    const poster = makeImg(`assets/videos/${v.poster}`, "🎬");
+    const play = document.createElement("div");
+    play.className = "play-btn";
+    play.textContent = "▶️";
+    frame.appendChild(poster);
+    frame.appendChild(play);
+
+    frame.addEventListener("click", () => {
+      const video = document.createElement("video");
+      video.src = `assets/videos/${v.file}`;
+      video.controls = true;
+      video.playsInline = true;
+      frame.innerHTML = "";
+      frame.appendChild(video);
+      video.play().catch(() => {});
+    }, { once: true });
+
+    const cap = document.createElement("div");
+    cap.className = "cap";
+    cap.textContent = v.caption;
+
+    card.appendChild(frame);
+    card.appendChild(cap);
+    videoGrid.appendChild(card);
+  });
+
+  /* ---------- discovery modal (shared by flowers + hidden corners) ---------- */
+  const discoverModal = document.getElementById("discover-modal");
+  const discoverIcon = document.getElementById("discover-modal-icon");
+  const discoverTitle = document.getElementById("discover-modal-title");
+  const discoverText = document.getElementById("discover-modal-text");
+  const discoverClose = document.getElementById("discover-modal-close");
+  const discoverCountEl = document.getElementById("discover-count");
+  const discoverTotalEl = document.getElementById("discover-total");
+
+  const totalDiscoveries = CONFIG.notes.length + CONFIG.hiddenCorners.length + CONFIG.reasons.length + CONFIG.affirmations.length + CONFIG.littleThings.length;
+  discoverTotalEl.textContent = totalDiscoveries;
+  const discovered = new Set();
+
+  const discoveryMeta = {
+    flower:      { icon: "🌸", title: i => `Note ${String(i+1).padStart(2,"0")}`, text: i => CONFIG.notes[i] },
+    corner:      { icon: "💗", title: () => "Hidden Corner", text: i => CONFIG.hiddenCorners[i] },
+    reason:      { icon: "💫", title: () => "Reason I Love You", text: i => CONFIG.reasons[i] },
+    affirmation: { icon: "🌟", title: () => "Remember This", text: i => CONFIG.affirmations[i] },
+    littlething: { icon: "🤍", title: () => "Little Thing", text: i => CONFIG.littleThings[i] }
+  };
+
+  function openDiscovery(type, i, el){
+    const key = `${type}-${i}`;
+    if(!discovered.has(key)){
+      discovered.add(key);
+      discoverCountEl.textContent = discovered.size;
+    }
+    const meta = discoveryMeta[type];
+    discoverIcon.innerHTML = `<span>${meta.icon}</span>`;
+    discoverTitle.textContent = meta.title(i);
+    discoverText.textContent = meta.text(i);
+    discoverModal.classList.add("show");
+
+    if(type === "flower"){
+      const btn = garden.querySelector(`.flower[data-index="${i}"]`);
+      if(btn) btn.classList.add("bloomed");
+    } else if(type === "corner"){
+      const heartEls = garden.querySelectorAll(".corner-heart");
+      if(heartEls[i]) heartEls[i].classList.add("found");
+    } else if(el){
+      el.classList.add("found");
+    }
+  }
+  discoverClose.addEventListener("click", () => discoverModal.classList.remove("show"));
+
+  /* ---------- reasons + affirmations grids ---------- */
+  function buildRevealGrid(containerId, items, type, emoji){
+    const container = document.getElementById(containerId);
+    items.forEach((text,i) => {
+      const card = document.createElement("button");
+      card.className = "reveal-card";
+      card.textContent = emoji;
+      card.addEventListener("click", () => openDiscovery(type, i, card));
+      container.appendChild(card);
+    });
+  }
+  buildRevealGrid("reasons-grid", CONFIG.reasons, "reason", "💫");
+  buildRevealGrid("affirmations-grid", CONFIG.affirmations, "affirmation", "🌟");
+
+  /* ---------- timeline ---------- */
+  const timelineEl = document.getElementById("timeline");
+  CONFIG.timelineMoments.forEach(text => {
+    const item = document.createElement("div");
+    item.className = "timeline-item";
+    item.innerHTML = `<p>${text}</p>`;
+    timelineEl.appendChild(item);
+  });
+  const timelineIO = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add("show"); });
+  }, { threshold:.4 });
+  timelineEl.querySelectorAll(".timeline-item").forEach(el => timelineIO.observe(el));
+
+  /* ---------- memory letters (click to open/close) ---------- */
+  const memoriesList = document.getElementById("memories-list");
+  CONFIG.memories.forEach(memory => {
+    const card = document.createElement("div");
+    card.className = "memory-card";
+
+    const title = document.createElement("div");
+    title.className = "memory-title";
+    title.textContent = memory.title;
+
+    const hint = document.createElement("div");
+    hint.className = "memory-hint";
+    hint.textContent = "tap to open";
+
+    const body = document.createElement("div");
+    body.className = "memory-body";
+    memory.paragraphs.forEach(text => {
+      const p = document.createElement("p");
+      if(text.startsWith("\"")) p.className = "quote";
+      p.textContent = text;
+      body.appendChild(p);
+    });
+
+    card.appendChild(title);
+    card.appendChild(hint);
+    card.appendChild(body);
+    card.addEventListener("click", () => {
+      const isOpen = body.classList.toggle("open");
+      hint.textContent = isOpen ? "tap to close" : "tap to open";
+    });
+    memoriesList.appendChild(card);
+  });
+
+  /* ---------- favourite things (revealed progressively) ---------- */
+  const favList = document.getElementById("favthings-list");
+  const favBtn = document.getElementById("favthings-btn");
+  let favIdx = 0;
+  function revealNextFavThing(){
+    if(favIdx >= CONFIG.favouriteThings.length) return;
+    const p = document.createElement("p");
+    p.textContent = CONFIG.favouriteThings[favIdx];
+    favList.appendChild(p);
+    favIdx++;
+    if(favIdx >= CONFIG.favouriteThings.length){
+      favBtn.textContent = "That's all of them (for now)";
+      favBtn.disabled = true;
+    }
+  }
+  favBtn.addEventListener("click", revealNextFavThing);
+  revealNextFavThing();
+
+  /* ---------- little things you never knew ---------- */
+  buildRevealGrid("littlethings-grid", CONFIG.littleThings, "littlething", "🤍");
+
+  /* ---------- open my journal (random thought, click for another) ---------- */
+  const journalBtn = document.getElementById("journal-btn");
+  const journalText = document.getElementById("journal-text");
+  const journalPool = [...CONFIG.reasons, ...CONFIG.affirmations, ...CONFIG.favouriteThings];
+  journalBtn.addEventListener("click", () => {
+    journalText.textContent = journalPool[Math.floor(Math.random()*journalPool.length)];
+    journalText.classList.add("show");
+  });
+
+  /* ---------- ending message ---------- */
+  document.getElementById("ending-message").textContent = CONFIG.endingMessage;
+
+  /* ---------- flower garden (scales to any number of notes) ---------- */
+  const garden = document.getElementById("flower-garden");
+  const flowerEmojis = ["🌸","🌼","🌷","🌺","🌻"];
+  const gardenHeight = Math.max(1150, CONFIG.notes.length * 95 + 200);
+  garden.style.height = gardenHeight + "px";
+
+  function hashedLeft(i){
+    const x = Math.sin(i * 12.9898) * 43758.5453;
+    const frac = x - Math.floor(x);
+    return 8 + frac * 78; // 8% - 86%
+  }
+
+  CONFIG.notes.forEach((text,i) => {
+    const btn = document.createElement("button");
+    btn.className = "flower";
+    btn.textContent = flowerEmojis[i % flowerEmojis.length];
+    btn.style.top = ((i / CONFIG.notes.length) * 96 + 2) + "%";
+    btn.style.left = hashedLeft(i) + "%";
+    btn.style.setProperty("--sway", (3 + Math.random()*2).toFixed(2) + "s");
+    btn.dataset.index = i;
+    btn.setAttribute("aria-label", `Discover note ${i+1}`);
+    btn.addEventListener("click", () => openDiscovery("flower", i));
+    garden.appendChild(btn);
+  });
+
+  /* ---------- hidden corner hearts (spaced down the tall path) ---------- */
+  const cornerFractions = [0.1, 0.37, 0.63, 0.9];
+  CONFIG.hiddenCorners.forEach((text,i) => {
+    const h = document.createElement("button");
+    const edge = i % 2 === 0 ? "edge-left" : "edge-right";
+    h.className = `corner-heart ${edge}`;
+    h.style.top = (cornerFractions[i % cornerFractions.length] * gardenHeight) + "px";
+    h.textContent = "💗";
+    h.setAttribute("aria-label", "Hidden surprise");
+    h.addEventListener("click", () => openDiscovery("corner", i));
+    garden.appendChild(h);
+  });
+
+  const cornerIO = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add("visible"); });
+  }, { threshold:.6 });
+  garden.querySelectorAll(".corner-heart").forEach(h => cornerIO.observe(h));
+
+  /* ---------- wheel ---------- */
+  const wheel = document.getElementById("wheel");
+  const prizes = CONFIG.wheelPrizes;
+  const slice = 360 / prizes.length;
+  const wheelColors = ["#f4a261","#e07a5f","#f2b880","#c65d3b","#f6c99a","#f4a261","#e07a5f","#f2b880"];
+  let gradient = "";
+  prizes.forEach((p,i) => {
+    gradient += `${wheelColors[i % wheelColors.length]} ${i*slice}deg ${(i+1)*slice}deg,`;
+  });
+  wheel.style.background = `conic-gradient(${gradient.slice(0,-1)})`;
+  prizes.forEach((p,i) => {
+    const label = document.createElement("span");
+    label.textContent = p;
+    label.style.transform = `rotate(${i*slice + slice/2}deg)`;
+    wheel.appendChild(label);
+  });
+
+  const spinBtn = document.getElementById("spin-btn");
+  const modal = document.getElementById("win-modal");
+  const winPhotoBox = document.getElementById("win-photo");
+  const closeModal = document.getElementById("close-modal");
+  document.getElementById("win-text").textContent = CONFIG.winText;
+  winPhotoBox.appendChild(makeImg(CONFIG.winPhoto,"😏"));
+
+  let currentRotation = 0;
+  spinBtn.addEventListener("click", () => {
+    spinBtn.disabled = true;
+    const extraSpins = 5 + Math.random()*2;
+    const randomOffset = Math.random()*360;
+    currentRotation += extraSpins*360 + randomOffset;
+    wheel.style.transform = `rotate(${currentRotation}deg)`;
+    setTimeout(() => {
+      launchConfetti();
+      modal.classList.add("show");
+      spinBtn.disabled = false;
+    }, 4600);
+  });
+  closeModal.addEventListener("click", () => modal.classList.remove("show"));
+
+  function launchConfetti(){
+    const colors = ["#f4a261","#f2b880","#e07a5f","#c65d3b","#f6c99a"];
+    for(let i=0;i<60;i++){
+      const p = document.createElement("div");
+      p.className = "confetti-piece";
+      p.style.left = Math.random()*100+"vw";
+      p.style.width = (6+Math.random()*6)+"px";
+      p.style.height = (6+Math.random()*10)+"px";
+      p.style.background = colors[Math.floor(Math.random()*colors.length)];
+      p.style.animationDuration = (2.2+Math.random()*1.6)+"s";
+      document.body.appendChild(p);
+      setTimeout(()=>p.remove(), 4000);
+    }
+  }
+
+  /* ---------- fireworks (big multi-color bursts, layered boom, continuous mode) ---------- */
+  const fwCanvas = document.getElementById("fireworks-canvas");
+  const fwCtx = fwCanvas.getContext("2d");
+  const fwDim = document.getElementById("fireworks-dim");
+  const fireworksBtn = document.getElementById("fireworks-btn");
+  function resizeFwCanvas(){
+    fwCanvas.width = window.innerWidth;
+    fwCanvas.height = window.innerHeight;
+  }
+  resizeFwCanvas();
+  window.addEventListener("resize", resizeFwCanvas);
+
+  const fireworkColors = ["#f4a261","#e07a5f","#f2b880","#c65d3b","#f6c99a","#ff6b9d","#6bc4ff","#ffe66d","#a78bfa","#4bd0c5","#ff4d4d","#66ff99"];
+  let fwParticles = [];
+  let fwAnimating = false;
+
+  function spawnFireworkBurst(x, y, color){
+    const count = 80 + Math.floor(Math.random()*50);
+    for(let i=0;i<count;i++){
+      const angle = (Math.PI*2*i)/count + Math.random()*0.25;
+      const speed = 3 + Math.random()*6.5;
+      fwParticles.push({
+        x, y,
+        vx: Math.cos(angle)*speed,
+        vy: Math.sin(angle)*speed,
+        alpha: 1,
+        color,
+        size: 2.2 + Math.random()*2.6
+      });
+    }
+    // bright flash at the burst core for extra punch
+    fwParticles.push({ x, y, vx:0, vy:0, alpha:1, color:"#ffffff", size:16, flash:true });
+  }
+
+  function animateFireworks(){
+    fwCtx.clearRect(0,0,fwCanvas.width,fwCanvas.height);
+    fwParticles.forEach(p => {
+      if(p.flash){
+        p.alpha -= 0.09;
+      } else {
+        p.vy += 0.045;
+        p.vx *= 0.985;
+        p.vy *= 0.985;
+        p.x += p.vx;
+        p.y += p.vy;
+        p.alpha -= 0.011;
+      }
+    });
+    fwParticles = fwParticles.filter(p => p.alpha > 0);
+    fwParticles.forEach(p => {
+      fwCtx.globalAlpha = Math.max(p.alpha,0);
+      fwCtx.fillStyle = p.color;
+      fwCtx.beginPath();
+      fwCtx.arc(p.x,p.y,p.size,0,Math.PI*2);
+      fwCtx.fill();
+    });
+    fwCtx.globalAlpha = 1;
+    if(fwParticles.length > 0){
+      requestAnimationFrame(animateFireworks);
+    } else {
+      fwAnimating = false;
+    }
+  }
+
+  let sharedAudioCtx = null;
+  function playFireworkBoom(){
+    try {
+      if(!sharedAudioCtx){
+        sharedAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      const ctx = sharedAudioCtx;
+      const now = ctx.currentTime;
+
+      // low sub-bass thump for a resounding punch
+      const thump = ctx.createOscillator();
+      thump.type = "sine";
+      thump.frequency.setValueAtTime(160, now);
+      thump.frequency.exponentialRampToValueAtTime(32, now + 0.38);
+      const thumpGain = ctx.createGain();
+      thumpGain.gain.setValueAtTime(1, now);
+      thumpGain.gain.exponentialRampToValueAtTime(0.001, now + 0.42);
+      thump.connect(thumpGain);
+      thumpGain.connect(ctx.destination);
+      thump.start(now);
+      thump.stop(now + 0.42);
+
+      // crackling noise burst
+      const duration = 0.85;
+      const bufferSize = Math.floor(ctx.sampleRate * duration);
+      const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+      const data = buffer.getChannelData(0);
+      for(let i=0;i<bufferSize;i++){
+        data[i] = (Math.random()*2-1) * Math.pow(1 - i/bufferSize, 1.6);
+      }
+      const noise = ctx.createBufferSource();
+      noise.buffer = buffer;
+      const filter = ctx.createBiquadFilter();
+      filter.type = "lowpass";
+      filter.frequency.setValueAtTime(2400, now);
+      filter.frequency.exponentialRampToValueAtTime(90, now + duration);
+      const noiseGain = ctx.createGain();
+      noiseGain.gain.setValueAtTime(0.7, now);
+      noiseGain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+      noise.connect(filter);
+      filter.connect(noiseGain);
+      noiseGain.connect(ctx.destination);
+      noise.start(now);
+      noise.stop(now + duration);
+    } catch(e) {}
+  }
+
+  let fwRunning = false;
+  let fwLoopTimeout = null;
+
+  function fwLoopStep(){
+    if(!fwRunning) return;
+    const x = fwCanvas.width * (0.1 + Math.random()*0.8);
+    const y = fwCanvas.height * (0.08 + Math.random()*0.42);
+    const color = fireworkColors[Math.floor(Math.random()*fireworkColors.length)];
+    spawnFireworkBurst(x, y, color);
+    playFireworkBoom();
+    if(!fwAnimating){
+      fwAnimating = true;
+      requestAnimationFrame(animateFireworks);
+    }
+    if(Math.random() < 0.4){
+      setTimeout(() => {
+        if(!fwRunning) return;
+        const x2 = fwCanvas.width * (0.1 + Math.random()*0.8);
+        const y2 = fwCanvas.height * (0.08 + Math.random()*0.42);
+        spawnFireworkBurst(x2, y2, fireworkColors[Math.floor(Math.random()*fireworkColors.length)]);
+        playFireworkBoom();
+      }, 140 + Math.random()*160);
+    }
+    fwLoopTimeout = setTimeout(fwLoopStep, 360 + Math.random()*320);
+  }
+
+  function startFireworks(){
+    if(fwRunning) return;
+    fwRunning = true;
+    fwDim.classList.add("show");
+    fireworksBtn.textContent = "⏹ Stop Fireworks";
+    fwLoopStep();
+  }
+
+  function stopFireworks(){
+    fwRunning = false;
+    if(fwLoopTimeout) clearTimeout(fwLoopTimeout);
+    fwDim.classList.remove("show");
+    fireworksBtn.textContent = "🎆 Fireworks";
+  }
+
+  fireworksBtn.addEventListener("click", () => {
+    if(fwRunning) stopFireworks(); else startFireworks();
+  });
+
+  const finaleIO = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if(e.isIntersecting){
+        startFireworks();
+        setTimeout(() => { if(fwRunning) stopFireworks(); }, 18000);
+        finaleIO.disconnect();
+      }
+    });
+  }, { threshold:.5 });
+  finaleIO.observe(document.getElementById("finale"));
+
+  /* ---------- spin our story (6 sections, each pulls a genuinely random pick from real content) ---------- */
+  const storyWheel = document.getElementById("story-wheel");
+  const storySections = [
+    { emoji: "💌", wheelLabel: "Love Letter", label: "A Love Letter", pool: () => CONFIG.envelopes.map(e => e.letter) },
+    { emoji: "📸", wheelLabel: "Memory", label: "A Favourite Memory", pool: () => CONFIG.timelineMoments },
+    { emoji: "🎙️", wheelLabel: "Voice Note", label: "A Voice Note", pool: () => CONFIG.favouriteThings.map(t => `(imagine me saying this) ${t}`) },
+    { emoji: "❤️", wheelLabel: "One Thing I Love", label: "One Thing I Love About You", pool: () => CONFIG.reasons },
+    { emoji: "🌍", wheelLabel: "A Place", label: "A Place We'll Visit Together", pool: () => CONFIG.places },
+    { emoji: "✨", wheelLabel: "Surprise", label: "A Little Surprise", pool: () => CONFIG.favouriteThings }
+  ];
+  const storySlice = 360 / storySections.length;
+  const storyColors = ["#f4a261","#e07a5f","#f2b880","#c65d3b","#f6c99a","#f4a261"];
+  let storyGradient = "";
+  storySections.forEach((s,i) => {
+    storyGradient += `${storyColors[i % storyColors.length]} ${i*storySlice}deg ${(i+1)*storySlice}deg,`;
+  });
+  storyWheel.style.background = `conic-gradient(${storyGradient.slice(0,-1)})`;
+  storySections.forEach((s,i) => {
+    const label = document.createElement("span");
+    label.textContent = `${s.emoji} ${s.wheelLabel}`;
+    label.style.transform = `rotate(${i*storySlice + storySlice/2}deg)`;
+    storyWheel.appendChild(label);
+  });
+
+  const storySpinBtn = document.getElementById("story-spin-btn");
+  let storyRotation = 0;
+  storySpinBtn.addEventListener("click", () => {
+    storySpinBtn.disabled = true;
+    const extraSpins = 5 + Math.random()*2;
+    const randomOffset = Math.random()*360;
+    storyRotation += extraSpins*360 + randomOffset;
+    storyWheel.style.transform = `rotate(${storyRotation}deg)`;
+    setTimeout(() => {
+      const normalized = ((storyRotation % 360) + 360) % 360;
+      const landedIndex = Math.floor(((360 - normalized) % 360) / storySlice);
+      const section = storySections[landedIndex];
+      const pool = section.pool();
+      const pick = pool[Math.floor(Math.random()*pool.length)];
+      discoverIcon.innerHTML = `<span>${section.emoji}</span>`;
+      discoverTitle.textContent = section.label;
+      discoverText.textContent = pick;
+      discoverModal.classList.add("show");
+      launchConfetti();
+      storySpinBtn.disabled = false;
+    }, 4600);
+  });
+
+  /* ---------- "open when..." envelopes ---------- */
+  const envelopeGrid = document.getElementById("envelope-grid");
+  CONFIG.envelopes.forEach(env => {
+    const wrap = document.createElement("div");
+    wrap.className = "mini-envelope";
+
+    const envelope = document.createElement("div");
+    envelope.className = "envelope-wrap";
+    envelope.innerHTML = `
+      <div class="envelope-flap"></div>
+      <div class="envelope-body"><div class="envelope-seal">💌</div></div>
+    `;
+
+    const label = document.createElement("div");
+    label.className = "envelope-label";
+    label.textContent = env.label;
+
+    const letter = document.createElement("div");
+    letter.className = "envelope-letter";
+    letter.textContent = env.letter;
+
+    envelope.addEventListener("click", () => {
+      if(envelope.classList.contains("open")) return;
+      envelope.classList.add("open");
+      label.textContent = "from me, to you 💛";
+      setTimeout(() => letter.classList.add("show"), 350);
+    });
+
+    wrap.appendChild(envelope);
+    wrap.appendChild(label);
+    wrap.appendChild(letter);
+    envelopeGrid.appendChild(wrap);
+  });
+
+  /* ---------- clickable finale heart ---------- */
+  const finaleHeart = document.getElementById("finale-heart");
+  const heartReveal = document.getElementById("heart-reveal");
+  finaleHeart.addEventListener("click", () => {
+    heartReveal.textContent = CONFIG.heartReveal;
+    heartReveal.classList.add("show");
+  });
+
+  /* ---------- replay ---------- */
+  document.getElementById("replay-btn").addEventListener("click", () => {
+    window.scrollTo({top:0, behavior:"smooth"});
+  });
+});
+</script>
+</body>
+</html>
