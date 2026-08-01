@@ -56,29 +56,30 @@ cd ~/loni-girlfriends-day && python3 -m http.server 8080
 
 Then open http://localhost:8080 in a browser.
 
-## 4. Put it on the internet (so a QR code can point to it)
+## 4. It's already live
 
-Easiest free option: GitHub Pages.
+Deployed via GitHub Pages, repo named just `loni` for the cleanest possible
+free URL:
+
+```
+https://demolafc-netizen.github.io/loni/
+```
+
+To push future changes: edit `index.html`, then from this folder:
 
 ```bash
 cd ~/loni-girlfriends-day
-git init
-git add .
-git commit -m "girlfriend's day site for LJ"
-gh repo create loni-girlfriends-day --public --source=. --push
+git add -A
+git commit -m "describe the change"
+git push origin main
 ```
 
-Then enable Pages: go to the new repo on GitHub → Settings → Pages →
-set source to the `main` branch, `/ (root)` folder. Your live URL will be:
-
-```
-https://<your-github-username>.github.io/loni-girlfriends-day/
-```
-
-(This whole step needs your go-ahead before I run any of it — it creates a
-public repo and pushes your content.)
+It goes live within a minute or two of pushing. Note this is a **public**
+repo (required for free GitHub Pages) — the photos/videos in it are
+technically visible to anyone who finds the repo on GitHub, not just via
+the QR code.
 
 ## 5. Turn the URL into a QR code
 
-Once step 4 gives you a live URL, ask me to generate the QR code (or use
+Ask me to generate the QR code (or use
 any QR generator) — I'll produce a PNG you can print or send her directly.
